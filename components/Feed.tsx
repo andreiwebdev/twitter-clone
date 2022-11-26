@@ -10,6 +10,12 @@ const Feed = () => {
   const tweets = useSelector((state: RootState) =>
     state.tweet.tweetsList.slice(1)
   );
+  const profileImageURL = useSelector(
+    (state: RootState) => state.user.userInfo.profileImageURL
+  );
+  const fullName = useSelector(
+    (state: RootState) => state.user.userInfo.fullName
+  );
 
   return (
     <div className="col-span-7 border-x lg:col-span-5">
@@ -28,7 +34,8 @@ const Feed = () => {
             key={tweet.id}
             description={tweet.description}
             haveImage={false}
-            imageUrl={""}
+            profileImageURL={profileImageURL}
+            fullName={fullName}
           />
         ))}
     </div>

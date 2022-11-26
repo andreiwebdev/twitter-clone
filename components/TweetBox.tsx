@@ -10,8 +10,14 @@ import {
 import { useDispatch } from "react-redux";
 import { addTweet } from "../store/tweet-slice";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+
 const TweetBox = () => {
   const [input, setInput] = useState<string>("");
+  const profileImageURL = useSelector(
+    (state: RootState) => state.user.userInfo.profileImageURL
+  );
 
   const dispatch = useDispatch();
 
@@ -35,7 +41,7 @@ const TweetBox = () => {
     <div className="flex space-x-2 p-5">
       <img
         className="h-14 w-14 object-cover rounded-full mt-5"
-        src="https://via.placeholder.com/150"
+        src={profileImageURL}
         alt=""
       />
 

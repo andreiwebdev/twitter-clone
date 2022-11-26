@@ -1,15 +1,19 @@
 import type { NextPage } from "next";
+import { FcGoogle } from "react-icons/fc";
+
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 
-import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import { addUser } from "../store/user-slice";
 
 const Login: NextPage = () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   if (loading) {
     return <div>loading...</div>;
@@ -21,7 +25,19 @@ const Login: NextPage = () => {
 
   const signIn = async () => {
     const result = await signInWithPopup(auth, provider);
-    console.log(result.user);
+    console.log(
+      result.user,
+      result.user.displayName,
+      result.user.photoURL,
+      result.user.uid
+    );
+    dispatch(
+      addUser({
+        id: result.user.uid,
+        fullName: result.user.displayName,
+        profileImageURL: result.user.photoURL,
+      })
+    );
   };
 
   return (

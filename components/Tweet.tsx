@@ -9,24 +9,30 @@ import {
 interface Props {
   description: string;
   haveImage: boolean;
-  imageUrl: string;
+  profileImageURL: string;
+  fullName: string;
 }
 
-const Tweet = ({ description, haveImage, imageUrl }: Props) => {
+const Tweet = ({
+  description,
+  haveImage,
+  profileImageURL,
+  fullName,
+}: Props) => {
   return (
     <div className="flex flex-col space-x-3 border-y p-5">
       <div className="flex space-x-3">
         <img
           className="h-10 w-10 rounded-full object-cover"
-          src="https://via.placeholder.com/150"
+          src={profileImageURL}
           alt=""
         />
 
         <div>
           <div className="flex items-center space-x-1">
-            <p className="mr-1 font-bold">Andrei Dragomir</p>
+            <p className="mr-1 font-bold">{fullName}</p>
             <p className="hidden text-sm text-gray-500 sm:inline">
-              @andreidragomir
+              @{fullName.replace(/\s/g, "").toLowerCase()}
             </p>
 
             <div className="text-sm text-gray-500">40 minutes ago</div>
@@ -37,7 +43,7 @@ const Tweet = ({ description, haveImage, imageUrl }: Props) => {
           {haveImage && (
             <img
               className="m-5 ml-0 mb-1 max-h-60 rounded object-cover shadow-sm w-full"
-              src={imageUrl}
+              src={""}
               alt=""
             />
           )}

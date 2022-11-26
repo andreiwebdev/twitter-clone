@@ -13,6 +13,7 @@ import {
 import SidebarRow from "./SidebarRow";
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
+import { GrTwitter } from "react-icons/gr";
 
 const Sidebar = () => {
   const auth = getAuth();
@@ -31,11 +32,7 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col items-center justify-between h-screen">
       <div className="col-span-2 flex flex-col items-center px-4 md:items-start">
-        <img
-          className="h-10 w-10 m-3"
-          src="https://via.placeholder.com/150"
-          alt=""
-        />
+        <GrTwitter className="h-10 w-10 m-3 text-twitter" />
         <SidebarRow Icon={HomeIcon} title="Home" />
         <SidebarRow Icon={HashtagIcon} title="Explore" />
         <SidebarRow Icon={BellIcon} title="Notifications" />
