@@ -7,8 +7,29 @@ import {
   SearchCircleIcon,
 } from "@heroicons/react/outline";
 
+import { useDispatch } from "react-redux";
+import { addTweet } from "../store/tweet-slice";
+
 const TweetBox = () => {
   const [input, setInput] = useState<string>("");
+
+  const dispatch = useDispatch();
+
+  const onChangeDescription = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setInput(e.target.value);
+  };
+
+  const onSubmitTweet = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    dispatch(
+      addTweet({
+        id: Math.random(),
+        description: input,
+      })
+    );
+  };
 
   return (
     <div className="flex space-x-2 p-5">
@@ -19,10 +40,10 @@ const TweetBox = () => {
       />
 
       <div className="flex flex-1 items-center pl-2">
-        <form className="flex flex-1 flex-col">
+        <form onSubmit={onSubmitTweet} className="flex flex-1 flex-col">
           <input
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={onChangeDescription}
             className="h-24 w-full text-xl outline-none placeholder:text-xl"
             type="text"
             placeholder="What's happening?"

@@ -1,1 +1,3 @@
 - use next js image component for images
+- add redux for creating tweets instead of sanity
+- add login functionality
