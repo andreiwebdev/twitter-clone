@@ -1,26 +1,40 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Feed from "../components/Feed";
-import Sidebar from "../components/Sidebar";
-import Widgets from "../components/Widgets";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
-const Home: NextPage = () => {
+import { FcGoogle } from "react-icons/fc";
+
+const Login: NextPage = () => {
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const [user, loading] = useAuthState(auth);
+  const router = useRouter();
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
+
+  if (user) {
+    router.push("/home");
+  }
+
+  const signIn = async () => {
+    const result = await signInWithPopup(auth, provider);
+    console.log(result.user);
+  };
+
   return (
-    <div className="lg:max-w-6xl mx-auto max-h-screen overflow-hidden">
-      <Head>
-        <title>Twitter Clone</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className="grid grid-cols-9">
-        <Sidebar />
-
-        <Feed />
-
-        <Widgets />
-      </main>
+    <div className="lg:max-w-6xl mx-auto max-h-screen h-screen overflow-hidden flex flex-col items-center justify-center">
+      <h1 className="mb-5">Welcome to my Twitter Clone</h1>
+      <button
+        onClick={signIn}
+        className="flex items-center border p-3 border-gray-400"
+      >
+        Sign in with Google <FcGoogle className="w-5 h-5 ml-3" />
+      </button>
     </div>
   );
 };
 
-export default Home;
+export default Login;
